@@ -175,7 +175,7 @@ public class PostGresConnUtils {
 	}
 	
 	//Method 5
-	public  ArrayList<HotelRoom> getBookedRooms(String customerID	){
+	public  ArrayList<HotelRoom> getBookedRooms(String customerID){
 		
 		getConn();
 		
