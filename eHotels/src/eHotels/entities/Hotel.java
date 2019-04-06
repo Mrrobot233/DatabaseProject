@@ -5,16 +5,15 @@ import java.util.ArrayList;
 public class Hotel {
 	
 	private int hotelID;
-	private HotelChain hotelChain;
-	private int hotelChainID = hotelChain.getHotelChainID();
+	private String name;
+	private int hotelChainID;
 	private String address;
 	private String email;
 	private int phoneNumber;
 	private int rating;
 	private int numberOfRooms;//This is a fixed value
 	private int numberOfRoomsAvailable;//This will need to be updated constantly.
-	private Manager manager;
-	private int managerID = manager.getManagerID();
+	private int managerID;
 	private ArrayList<HotelRoom> rooms = new ArrayList<>();
 	
 	
@@ -32,15 +31,6 @@ public class Hotel {
 		this.hotelID = hotelID;
 	}
 
-
-	public HotelChain getHotelChain() {
-		return hotelChain;
-	}
-
-
-	public void setHotelChain(HotelChain hotelChain) {
-		this.hotelChain = hotelChain;
-	}
 
 
 	public int getHotelChainID() {
@@ -112,17 +102,6 @@ public class Hotel {
 		this.numberOfRoomsAvailable = numberOfRoomsAvailable;
 	}
 
-
-	public Manager getManager() {
-		return manager;
-	}
-
-
-	public void setManager(Manager manager) {
-		this.manager = manager;
-	}
-
-
 	public int getManagerID() {
 		return managerID;
 	}
@@ -142,6 +121,17 @@ public class Hotel {
 		this.rooms = rooms;
 	}
 
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
 
 	
 	

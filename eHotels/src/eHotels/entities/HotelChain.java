@@ -9,6 +9,7 @@ public class HotelChain {
 	private String address; //Might break this down into Street, Zip Code etc. Might actually delete it all together.
 	private int numberOfHotels;
 	private int centralOfficeID;
+	private String centralOfficeAddress;
 	private String email;
 	private int phoneNumber;
 	private ArrayList<Hotel> hotels = new ArrayList<>();//Might need to use this. Might not.
@@ -72,6 +73,19 @@ public class HotelChain {
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
+	public String getCentralOfficeAddress() {
+		return centralOfficeAddress;
+	}
+
+	public void setCentralOfficeAddress(String centralOfficeAddress) {
+		this.centralOfficeAddress = centralOfficeAddress;
+	}
+
+	public void setNumberOfHotels(int numberOfHotels) {
+		this.numberOfHotels = numberOfHotels;
+	}
+	
 	
 	
 	

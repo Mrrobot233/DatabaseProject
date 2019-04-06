@@ -16,7 +16,7 @@ public class HotelRoom {
 	private String roomSize;//Have 5 options for room sizes and the String corresponds to the roomSize
 	private String view; //Might consider turning this to an into an int with corresponding views options.
 	private double price;
-	private int custID;//The room will be considered empty if the custID = 0; Should be able to get this from the Customer object.
+	private int customerID;//The room will be considered empty if the custID = 0; Should be able to get this from the Customer object.
 	private int hotelID;//Should be able to get this from the Hotel object.
 	private boolean canExtend;//This should be set to true for all rooms except for Single.
 	private String status;
@@ -26,6 +26,40 @@ public class HotelRoom {
 	public HotelRoom(){
 		
 	}
+	
+	public HotelRoom(int roomNumber, String amenities, String roomSize, String view, double price, int custID,
+			int hotelID, boolean canExtend, String status, boolean damaged, String damageDescription) {
+		super();
+		this.roomNumber = roomNumber;
+		this.amenities = amenities;
+		this.roomSize = roomSize;
+		this.view = view;
+		this.price = price;
+		this.customerID = custID;
+		this.hotelID = hotelID;
+		this.canExtend = canExtend;
+		this.status = status;
+		this.damaged = damaged;
+		this.damageDescription = damageDescription;
+	}
+	
+	//Constructor to create a room without the CustomerID
+	public HotelRoom(int roomNumber, String amenities, String roomSize, String view, double price,
+			int hotelID, boolean canExtend, String status, boolean damaged, String damageDescription) {
+		super();
+		this.roomNumber = roomNumber;
+		this.amenities = amenities;
+		this.roomSize = roomSize;
+		this.view = view;
+		this.price = price;
+		this.hotelID = hotelID;
+		this.canExtend = canExtend;
+		this.status = status;
+		this.damaged = damaged;
+		this.damageDescription = damageDescription;
+	}
+
+
 
 	public int getRoomNumber() {
 		return roomNumber;
@@ -67,12 +101,12 @@ public class HotelRoom {
 		this.price = price;
 	}
 
-	public int getCustID() {
-		return custID;
+	public int getCustomerID() {
+		return customerID;
 	}
 
-	public void setCustID(int custID) {
-		this.custID = custID;
+	public void setCustID(int customerID) {
+		this.customerID = customerID;
 	}
 
 	public int getHotelID() {

@@ -8,9 +8,15 @@ public class Employee {
 	private String employeeLogin;
 	private String employeePassword;
 	private int departmentID; //This will need to be drawn from the Department class.
-	private int managerID; //This will need to be drawn from the Department class.
+	private Boolean isManager; //This will need to be drawn from the Department class.
 	private String postion; //So far I'm not seeing the use of this attribute within the code. Might delete it in the end.
+	private String address;
+	
+	
 
+	public Employee() {//Empty constructor. I can create a constructor that intialises all the values but I feel like it's better to use the setters for that.
+		
+	}
 	
 	public int getEmployeeID() {
 		return employeeID;
@@ -72,16 +78,6 @@ public class Employee {
 	}
 
 
-	public int getManagerID() {
-		return managerID;
-	}
-
-
-	public void setManagerID(int managerID) {
-		this.managerID = managerID;
-	}
-
-
 	public String getPostion() {
 		return postion;
 	}
@@ -92,8 +88,23 @@ public class Employee {
 	}
 
 
-	public Employee() {//Empty constructor. I can create a constructor that intialises all the values but I feel like it's better to use the setters for that.
-		
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+	public Boolean getIsManager() {
+		return isManager;
+	}
+
+
+	public void setIsManager(Boolean isManager) {
+		this.isManager = isManager;
 	}
 
 

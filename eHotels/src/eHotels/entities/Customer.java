@@ -7,7 +7,24 @@ public class Customer {
 	private String lastName;
 	private String customerLogin;
 	private String customerPassword;
+	private String address;
 	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setCustomerLogin(String customerLogin) {
+		this.customerLogin = customerLogin;
+	}
+
+	public void setCustomerPassword(String customerPassword) {
+		this.customerPassword = customerPassword;
+	}
+
 	public Customer(){
 		
 	}

@@ -49,6 +49,8 @@ public class PostGresConnUtils {
 		}
 	}
 	
+	
+	//Method 1
 	public String getEmployeePasswordByUsername(String param) {//Might need to edit this in order to fit how data is arranged in my database.
 		
 		getConn();//You've always got to get the connection first.
@@ -77,7 +79,8 @@ public class PostGresConnUtils {
 		return password;
 	}
 	
-	public String[] getCustomerInfoByID(String param){//Definitely going to need to change the number of 
+	//Method 2
+	public String[] getCustomerInfoByLogin(String customerLogin){//Definitely going to need to change the number of 
 		
 		getConn();//You've always got to get the connection first.
 		
@@ -85,9 +88,9 @@ public class PostGresConnUtils {
 		
 		try {
 			
-			prepStatement = dataBaseConnection.prepareStatement("select * from eHotels.customer where customerID=?"); //I might include an except clause in the query to remove some columns.
+			prepStatement = dataBaseConnection.prepareStatement("select * from eHotels.customer where customerLogin=?"); //I might include an except clause in the query to remove some columns.
 			
-			prepStatement.setString(1, param);
+			prepStatement.setString(1, customerLogin);
 			resultSet = prepStatement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -106,6 +109,7 @@ public class PostGresConnUtils {
 		
 	}
 	
+	//Method 3
 	public boolean insertNewCustomer(String[] param) {//Will need to update this method to fit how data is presented in my database.
 		
 		getConn();//You've always got to get the connection first.
@@ -130,6 +134,7 @@ public class PostGresConnUtils {
 		
 	}
 	
+	//Method 4
 	public  ArrayList<HotelRoom> getAllAvailRooms(){
 		
 		getConn();
@@ -138,15 +143,24 @@ public class PostGresConnUtils {
 		
 		try {
 			
-			prepStatement = dataBaseConnection.prepareStatement("select * from ehotels.hotelroom where room_status='T'" );
+			prepStatement = dataBaseConnection.prepareStatement("select * from ehotels.hotelroom where status='available'" );
 			resultSet = prepStatement.executeQuery();
 			
 			while(resultSet.next()){
 				
-				String room_no = resultSet.getString("room_no");
-				String room_status = resultSet.getString("room_status");
-				HotelRoom room = new HotelRoom();
-				room.setRoomNumber(Integer.parseInt(room_no));//Might need to create a constraint there to prevent non integer values being used.
+				int roomNumber = resultSet.getInt("roomNumber");
+				String roomAmenities = resultSet.getString("amenities");
+				String roomSize = resultSet.getString("roomSize");
+				String roomView = resultSet.getString("view");
+				double roomPrice = resultSet.getDouble("price");
+				//int roomCustomerID = resultSet.getInt("customerID");// Might not need this. In the firstwebproject example, they didn't use it.
+				int roomHotelID = resultSet.getInt("hotelID");
+				boolean roomCanExtend = resultSet.getBoolean("canExtend");
+				String roomStatus = resultSet.getString("status");
+				boolean roomDamaged = resultSet.getBoolean("damaged");
+				String roomDamageDescription = resultSet.getString("damageDescription");
+				HotelRoom room = new HotelRoom(roomNumber, roomAmenities, roomSize, roomView, roomPrice, roomHotelID, roomCanExtend, roomStatus, roomDamaged, roomDamageDescription);
+				//This is a room without a customerID.
 				Rooms.add(room);
 			
 			}
@@ -154,6 +168,45 @@ public class PostGresConnUtils {
 			e.printStackTrace();
 		} finally {
         	closeDatabase();
+        }
+					
+		return Rooms;
+		
+	}
+	
+	//Method 5
+	public  ArrayList<HotelRoom> getBookedRooms(String customerID	){
+		
+		getConn();
+		
+		ArrayList<HotelRoom> Rooms = new ArrayList<HotelRoom>();
+		
+		try {
+			//Might want to rework this preparedStatement.
+			prepStatement = dataBaseConnection.prepareStatement("select * from ehotels.hotelroom where status='available' and customerID='"+customerID+"'");
+			resultSet = prepStatement.executeQuery();
+			
+			while(resultSet.next()){
+				int roomNumber = resultSet.getInt("roomNumber");
+				String roomAmenities = resultSet.getString("amenities");
+				String roomSize = resultSet.getString("roomSize");
+				String roomView = resultSet.getString("view");
+				double roomPrice = resultSet.getDouble("price");
+				int roomCustomerID = resultSet.getInt("customerID");// Might not need this. In the firstwebproject example, they didn't use it.
+				int roomHotelID = resultSet.getInt("hotelID");
+				boolean roomCanExtend = resultSet.getBoolean("canExtend");
+				String roomStatus = resultSet.getString("status");
+				boolean roomDamaged = resultSet.getBoolean("damaged");
+				String roomDamageDescription = resultSet.getString("damageDescription");
+				HotelRoom room = new HotelRoom(roomNumber, roomAmenities, roomSize, roomView, roomPrice, roomCustomerID, roomHotelID, roomCanExtend, roomStatus, roomDamaged, roomDamageDescription);
+				//This is a room without a customerID.
+				Rooms.add(room);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeDatabase();
         }
 					
 		return Rooms;
@@ -197,6 +250,9 @@ public class PostGresConnUtils {
 	 * 9) public String[] getCustomerName
 	 * 
 	 * 10) public String[] get HotelInfo
+	 * 
+	 * 11) public boolean updateNumberOfRoomsAvailable
+	 * 
 	 * 
 	 * 
 	 */
