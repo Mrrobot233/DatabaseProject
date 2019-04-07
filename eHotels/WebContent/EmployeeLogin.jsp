@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Customer Login</title>
+<title>Employee Login</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
@@ -35,9 +35,9 @@
 				class="row justify-content-center align-items-center">
 				<div id="login-column" class="col-md-6">
 					<div id="login-box" class="col-md-12">
-						<form id="login-form" class="form" action="CustomerLoginCheck"
+						<form id="login-form" class="form" action="EmployeeLoginCheck"
 							method="post">
-							<h3 class="text-center text-info">Customer Login</h3>
+							<h3 class="text-center text-info">Employee Login</h3>
 							<div class="form-group">
 								<label for="username" class="text-info">Username:</label><br>
 								<input type="text" name="username" id="username"
@@ -53,11 +53,11 @@
 							</div>
 
 							<div class="form-group">
-								<p for="New to eHotels" class="text-center">New to eHotels?</p>
+								<p for="New to eHotels" class="text-center">New to eHotels Employee?</p>
 							</div>
 
 							<div class="form-group">
-								<a href="RegisterCustomer.jsp" type="button" id="button"
+								<a href="RegisterEmployee.jsp" type="button" id="button"
 									class="btn btn-info btn-block">Register Here</a>
 							</div>
 

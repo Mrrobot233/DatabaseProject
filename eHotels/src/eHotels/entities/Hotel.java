@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Hotel {
 	
 	private int hotelID;
-	private String name;
+	private String hotelName;
 	private int hotelChainID;
 	private String address;
 	private String email;
@@ -122,14 +122,17 @@ public class Hotel {
 	}
 
 
-	public String getName() {
-		return name;
+	public String getHotelName() {
+		return hotelName;
 	}
 
 
-	public void setName(String name) {
-		this.name = name;
+	public void setHotelName(String hotelName) {
+		this.hotelName = hotelName;
 	}
+
+
+
 
 	
 

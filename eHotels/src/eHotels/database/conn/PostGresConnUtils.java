@@ -59,7 +59,7 @@ public class PostGresConnUtils {
 		
 		try {
 			
-			prepStatement = dataBaseConnection.prepareStatement("select emp_password from ehotels.employee where emp_login=?");
+			prepStatement = dataBaseConnection.prepareStatement("SELECT employeePassword FROM employee WHERE employeeLogin=?");
 			
 			prepStatement.setString(1, param);
 			resultSet = prepStatement.executeQuery();
@@ -79,7 +79,7 @@ public class PostGresConnUtils {
 		return password;
 	}
 	
-	//Method 2
+	//Method 2. This Works!!!
 	public String[] getCustomerInfoByLogin(String customerLogin){//Definitely going to need to change the number of 
 		
 		getConn();//You've always got to get the connection first.
@@ -88,7 +88,7 @@ public class PostGresConnUtils {
 		
 		try {
 			
-			prepStatement = dataBaseConnection.prepareStatement("select * from eHotels.customer where customerLogin=?"); //I might include an except clause in the query to remove some columns.
+			prepStatement = dataBaseConnection.prepareStatement("SELECT customerID, firstName, customerPassword FROM customer WHERE customerLogin=?"); //I might include an except clause in the query to remove some columns.
 			
 			prepStatement.setString(1, customerLogin);
 			resultSet = prepStatement.executeQuery();
@@ -117,7 +117,7 @@ public class PostGresConnUtils {
 		try {
 			
 			statement = dataBaseConnection.createStatement();
-			sql = "insert into ehotels.customer values('"+param[0]+"','"+param[1]+"','"+param[2]+"')";//Will need to update this according to the data I've got in the database.
+			sql = "insert into customer values('"+param[0]+"','"+param[1]+"','"+param[2]+"')";//Will need to update this according to the data I've got in the database.
 			
 			System.out.print(sql);
 			
@@ -143,7 +143,7 @@ public class PostGresConnUtils {
 		
 		try {
 			
-			prepStatement = dataBaseConnection.prepareStatement("select * from ehotels.hotelroom where status='available'" );
+			prepStatement = dataBaseConnection.prepareStatement("SELECT * FROM hotelRoom WHERE status='available'" );
 			resultSet = prepStatement.executeQuery();
 			
 			while(resultSet.next()){
@@ -183,7 +183,7 @@ public class PostGresConnUtils {
 		
 		try {
 			//Might want to rework this preparedStatement.
-			prepStatement = dataBaseConnection.prepareStatement("select * from ehotels.hotelroom where status='available' and customerID='"+customerID+"'");
+			prepStatement = dataBaseConnection.prepareStatement("SELECT * FROM hotelRoom WHERE status='booked' and customerID='"+customerID+"'");
 			resultSet = prepStatement.executeQuery();
 			
 			while(resultSet.next()){
@@ -212,6 +212,134 @@ public class PostGresConnUtils {
 		return Rooms;
 		
 	}
+	
+	//Same as the method above but without the customerID parameter
+	public  ArrayList<HotelRoom> getBookedRooms(){
+		
+		getConn();
+		
+		ArrayList<HotelRoom> Rooms = new ArrayList<HotelRoom>();
+		
+		try {
+			//Might want to rework this preparedStatement.
+			prepStatement = dataBaseConnection.prepareStatement("SELECT * FROM hotelRoom WHERE status='booked'");
+			resultSet = prepStatement.executeQuery();
+			
+			while(resultSet.next()){
+				int roomNumber = resultSet.getInt("roomNumber");
+				String roomAmenities = resultSet.getString("amenities");
+				String roomSize = resultSet.getString("roomSize");
+				String roomView = resultSet.getString("view");
+				double roomPrice = resultSet.getDouble("price");
+				int roomCustomerID = resultSet.getInt("customerID");// Might not need this. In the firstwebproject example, they didn't use it.
+				int roomHotelID = resultSet.getInt("hotelID");
+				boolean roomCanExtend = resultSet.getBoolean("canExtend");
+				String roomStatus = resultSet.getString("status");
+				boolean roomDamaged = resultSet.getBoolean("damaged");
+				String roomDamageDescription = resultSet.getString("damageDescription");
+				HotelRoom room = new HotelRoom(roomNumber, roomAmenities, roomSize, roomView, roomPrice, roomCustomerID, roomHotelID, roomCanExtend, roomStatus, roomDamaged, roomDamageDescription);
+				//This is a room without a customerID.
+				Rooms.add(room);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeDatabase();
+        }
+					
+		return Rooms;
+		
+	}
+	
+	//Method 12
+	public String getCustomerPasswordByUsername(String param) {//Might need to edit this in order to fit how data is arranged in my database.
+		
+		getConn();//You've always got to get the connection first.
+		
+		String password = "";
+		
+		try {
+			
+			prepStatement = dataBaseConnection.prepareStatement("SELECT customerPassword FROM customer WHERE customerLogin= ?");
+			prepStatement.setString(1, param);
+			resultSet = prepStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				password = resultSet.getString(1);
+				
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			
+			closeDatabase();
+		}
+		
+		return password;
+	}
+	
+	//Method 13
+	public String getCustomerFirstNameByUsername(String param) {//Might need to edit this in order to fit how data is arranged in my database.
+		
+		getConn();//You've always got to get the connection first.
+		
+		String firstName = "";
+		
+		try {
+			
+			prepStatement = dataBaseConnection.prepareStatement("SELECT firstName FROM customer WHERE customerLogin=?");
+			
+			prepStatement.setString(1, param);
+			resultSet = prepStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				firstName = resultSet.getString(1);
+				
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			
+			closeDatabase();
+		}
+		
+		return firstName;
+	}
+	
+	//Method 14
+	public String[] getEmployeeInfoByLogin(String employeeLogin){//Definitely going to need to change the number of 
+		
+		getConn();//You've always got to get the connection first.
+		
+		String[] info = new String[2];//Will need to change the size of this.
+		
+		try {
+			
+			prepStatement = dataBaseConnection.prepareStatement("SELECT employeeID, firstName, employeePassword FROM employee WHERE employeeLogin=?"); //I might include an except clause in the query to remove some columns.
+			
+			prepStatement.setString(1, employeeLogin);
+			resultSet = prepStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				info[0] = resultSet.getString(2);//Need to figure out what these indexes do.
+				info[1] = resultSet.getString(3);//Need to figure out what these indexes do.
+				
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeDatabase();
+		}
+		return info;
+		
+	}
+	
+
 	
 	
 	
@@ -253,7 +381,7 @@ public class PostGresConnUtils {
 	 * 
 	 * 11) public boolean updateNumberOfRoomsAvailable
 	 * 
-	 * 
+	 * 12) public String 
 	 * 
 	 */
 	

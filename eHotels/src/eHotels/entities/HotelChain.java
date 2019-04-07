@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class HotelChain {
 
 	private int hotelChainID;
-	private String name;
+	private String hotelChainName;
 	private String address; //Might break this down into Street, Zip Code etc. Might actually delete it all together.
 	private int numberOfHotels;
 	private int centralOfficeID;
@@ -26,12 +26,13 @@ public class HotelChain {
 		this.hotelChainID = hotelChainID;
 	}
 
-	public String getName() {
-		return name;
+
+	public String getHotelChainName() {
+		return hotelChainName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setHotelChainName(String hotelChainName) {
+		this.hotelChainName = hotelChainName;
 	}
 
 	public String getAddress() {

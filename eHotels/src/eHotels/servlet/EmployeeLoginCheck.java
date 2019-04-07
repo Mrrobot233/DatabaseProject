@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import eHotels.database.conn.*;
-import eHotels.entities.*;
+import eHotels.database.conn.PostGresConnUtils;
+import eHotels.entities.HotelRoom;
 
 /**
- * Servlet implementation class CustomerLoginCheck
+ * Servlet implementation class EmployeeLoginCheck
  */
-@WebServlet("/CustomerLoginCheck")
-public class CustomerLoginCheck extends HttpServlet {
+@WebServlet("/EmployeeLoginCheck")
+public class EmployeeLoginCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CustomerLoginCheck() {
+    public EmployeeLoginCheck() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,7 +49,7 @@ public class CustomerLoginCheck extends HttpServlet {
 		
 		PostGresConnUtils connection = new PostGresConnUtils();
 		//[0]: Username, [1]: Password.
-		String[] info = connection.getCustomerInfoByLogin(username);
+		String[] info = connection.getEmployeeInfoByLogin(username);
 		if(password.equals(info[1])) {
 			 
 			ArrayList<HotelRoom> allAvailableRooms = connection.getAllAvailRooms();
@@ -59,7 +59,7 @@ public class CustomerLoginCheck extends HttpServlet {
 			request.setAttribute("allAvailableRooms", allAvailableRooms);
 			request.setAttribute("allBookedRooms", allBookedRooms);
 			
-			request.getRequestDispatcher("bookingPage.jsp").forward(request, response);
+			request.getRequestDispatcher("CreateRentingPage.jsp").forward(request, response);
 			return;
 		}
 		 response.sendRedirect("loginFailure.jsp");
