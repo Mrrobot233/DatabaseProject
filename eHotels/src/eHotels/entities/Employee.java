@@ -8,8 +8,8 @@ public class Employee {
 	private String employeeLogin;
 	private String employeePassword;
 	private int departmentID; //This will need to be drawn from the Department class.
-	private Boolean isManager; //This will need to be drawn from the Department class.
-	private String postion; //So far I'm not seeing the use of this attribute within the code. Might delete it in the end.
+	private boolean isManager; //This will need to be drawn from the Department class.
+	private String jobPostion; //So far I'm not seeing the use of this attribute within the code. Might delete it in the end.
 	private String address;
 	
 	
@@ -18,6 +18,24 @@ public class Employee {
 		
 	}
 	
+	
+	
+	public Employee(int employeeID, String firstName, String lastName, String employeeLogin, String employeePassword,
+			int departmentID, boolean isManager, String jobPostion, String address) {
+		super();
+		this.employeeID = employeeID;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.employeeLogin = employeeLogin;
+		this.employeePassword = employeePassword;
+		this.departmentID = departmentID;
+		this.isManager = isManager;
+		this.jobPostion = jobPostion;
+		this.address = address;
+	}
+
+
+
 	public int getEmployeeID() {
 		return employeeID;
 	}
@@ -78,13 +96,13 @@ public class Employee {
 	}
 
 
-	public String getPostion() {
-		return postion;
+	public String getJobPostion() {
+		return jobPostion;
 	}
 
 
-	public void setPostion(String postion) {
-		this.postion = postion;
+	public void setJobPostion(String jobPostion) {
+		this.jobPostion = jobPostion;
 	}
 
 
@@ -97,15 +115,16 @@ public class Employee {
 		this.address = address;
 	}
 
-
-	public Boolean getIsManager() {
+	public boolean isManager() {
 		return isManager;
 	}
 
-
-	public void setIsManager(Boolean isManager) {
+	public void setManager(boolean isManager) {
 		this.isManager = isManager;
 	}
+
+
+
 
 
 

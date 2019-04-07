@@ -110,19 +110,16 @@ public class PostGresConnUtils {
 	}
 	
 	//Method 3
-	public boolean insertNewCustomer(String[] param) {//Will need to update this method to fit how data is presented in my database.
+	public boolean insertNewCustomer(int customerID, String firstName, String lastName, String address, String customerLogin, String customerPassword) {//Will need to update this method to fit how data is presented in my database.
 		
 		getConn();//You've always got to get the connection first.
 		
 		try {
 			
 			statement = dataBaseConnection.createStatement();
-			sql = "insert into customer values('"+param[0]+"','"+param[1]+"','"+param[2]+"')";//Will need to update this according to the data I've got in the database.
-			
-			System.out.print(sql);
-			
+			sql = "INSERT INTO customer(customerID, firstName, lastName, address, customerLogin, customerPassword) VALUES ( '"+customerID+"', '"+firstName+"', '"+lastName+"', '"+address+"', '"+customerLogin+"', '"+customerPassword+"')";
+				
 			statement.executeUpdate(sql);
-			
 			return true;
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -133,6 +130,30 @@ public class PostGresConnUtils {
 		}
 		
 	}
+	
+	public boolean insertNewEmployee(int employeeID, String firstName, String lastName, String address, String jobPosition, String employeeLogin, String employeePassword,
+			int departmentID, boolean isManager){
+		
+		getConn();//You've always got to get the connection first.
+		
+		try {
+			
+			statement = dataBaseConnection.createStatement();
+			sql = "INSERT INTO employee(employeeID, firstName, lastName, address, jobPosition, employeeLogin, employeePassword, departmentID, isManager) VALUES ( "+employeeID+", '"+firstName+"', '"+lastName+"', '"+address+"', '"+jobPosition+"', '"+employeeLogin+"', '"+employeePassword+"', "+departmentID+", '"+isManager+"')";
+				
+			statement.executeUpdate(sql);
+			return true;
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			closeDatabase();
+		}
+		
+	}
+	
+	
 	
 	//Method 4
 	public  ArrayList<HotelRoom> getAllAvailRooms(){

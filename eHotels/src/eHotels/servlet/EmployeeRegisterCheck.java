@@ -1,29 +1,26 @@
 package eHotels.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import eHotels.database.conn.PostGresConnUtils;
-import eHotels.entities.HotelRoom;
+import eHotels.database.conn.*;
+import eHotels.entities.*;
 
 /**
- * Servlet implementation class EmployeeLoginCheck
+ * Servlet implementation class EmployeeRegisterCheck
  */
-@WebServlet("/EmployeeLoginCheck")
-public class EmployeeLoginCheck extends HttpServlet {
+@WebServlet("/EmployeeRegisterCheck")
+public class EmployeeRegisterCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmployeeLoginCheck() {
+    public EmployeeRegisterCheck() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,27 +40,37 @@ public class EmployeeLoginCheck extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		
-		HttpSession session = request.getSession();
+		String stringEmployeeID = request.getParameter("employeeID");
+		int employeeID = Integer.parseInt(stringEmployeeID);
+		String stringDepartmentID = request.getParameter("departmentID");
+		int departmentID = Integer.parseInt(stringDepartmentID);
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String jobPosition = request.getParameter("jobPostion");
+		String address = request.getParameter("address");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		String stringIsManager = request.getParameter("isManager");
+		boolean isManager = true;
+		
+		if(stringIsManager.equals("Yes")) {
+			isManager = true;
+		} else if(stringIsManager.equals("No")) {
+			isManager = false;
+		}
 		
 		PostGresConnUtils connection = new PostGresConnUtils();
-		//[0]: Username, [1]: Password.
-		String[] info = connection.getEmployeeInfoByLogin(username);
-		if(password.equals(info[1])) {
-			 
-			ArrayList<HotelRoom> allAvailableRooms = connection.getAllAvailRooms();
-			ArrayList<HotelRoom> allBookedRooms = connection.getBookedRooms();
-			
-			request.setAttribute("customerFirstName", info[0] );
-			request.setAttribute("allAvailableRooms", allAvailableRooms);
-			request.setAttribute("allBookedRooms", allBookedRooms);
-			
-			request.getRequestDispatcher("CreateRentingPage.jsp").forward(request, response);
+		boolean insertSuccess = connection.insertNewEmployee(employeeID, firstName, lastName, address, jobPosition, username, password, departmentID, isManager);
+		
+		if(insertSuccess) {
+			response.sendRedirect("EmployeeLogin.jsp");
 			return;
 		}
-		 response.sendRedirect("loginFailure.jsp");
-		 return;
+		
+		response.sendRedirect("loginFailure.jsp");
+		
+		
+		
 	}
 
 }
