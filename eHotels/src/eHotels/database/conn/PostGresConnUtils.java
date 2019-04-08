@@ -21,8 +21,8 @@ public class PostGresConnUtils {
 			
 			Class.forName("org.postgresql.Driver"); 
 							
-			dataBaseConnection = DriverManager.getConnection("jdbc:postgresql://web0.site.uottawa.ca:15432/eajae073",
-					"eajae073", "EA_Sports7");
+			dataBaseConnection = DriverManager.getConnection("jdbc:postgresql://web0.site.uottawa.ca:15432/jeriv070",
+					"jeriv070", "Godofwar3.");
 														
 		}catch(Exception e) {
 			System.out.print("error catched");
@@ -59,7 +59,7 @@ public class PostGresConnUtils {
 		
 		try {
 			
-			prepStatement = dataBaseConnection.prepareStatement("SELECT employeePassword FROM employee WHERE employeeLogin=?");
+			prepStatement = dataBaseConnection.prepareStatement("SELECT \"Emp_Password\" FROM employee WHERE \"Emp_Login\"=?");
 			
 			prepStatement.setString(1, param);
 			resultSet = prepStatement.executeQuery();
@@ -88,7 +88,7 @@ public class PostGresConnUtils {
 		
 		try {
 			
-			prepStatement = dataBaseConnection.prepareStatement("SELECT customerID, firstName, customerPassword FROM customer WHERE customerLogin=?"); //I might include an except clause in the query to remove some columns.
+			prepStatement = dataBaseConnection.prepareStatement("SELECT \"Cus_ID\", \"firstName\", \"Cus_Password\" FROM customer WHERE \"Cus_Login\"=?"); //I might include an except clause in the query to remove some columns.
 			
 			prepStatement.setString(1, customerLogin);
 			resultSet = prepStatement.executeQuery();
@@ -117,7 +117,7 @@ public class PostGresConnUtils {
 		try {
 			
 			statement = dataBaseConnection.createStatement();
-			sql = "INSERT INTO customer(customerID, firstName, lastName, address, customerLogin, customerPassword) VALUES ( '"+customerID+"', '"+firstName+"', '"+lastName+"', '"+address+"', '"+customerLogin+"', '"+customerPassword+"')";
+			sql = "INSERT INTO customer(\"Cus_ID\", \"firstName\", \"lastName\", \"address\", \"Cus_Login\", \"Cus_Password\") VALUES ( '"+customerID+"', '"+firstName+"', '"+lastName+"', '"+address+"', '"+customerLogin+"', '"+customerPassword+"')";
 				
 			statement.executeUpdate(sql);
 			return true;
@@ -139,7 +139,7 @@ public class PostGresConnUtils {
 		try {
 			
 			statement = dataBaseConnection.createStatement();
-			sql = "INSERT INTO employee(employeeID, firstName, lastName, address, jobPosition, employeeLogin, employeePassword, departmentID, isManager) VALUES ( "+employeeID+", '"+firstName+"', '"+lastName+"', '"+address+"', '"+jobPosition+"', '"+employeeLogin+"', '"+employeePassword+"', "+departmentID+", '"+isManager+"')";
+			sql = "INSERT INTO employee(\"SSN\", \"firstName\", \"lastName\", address, \"Position\", \"Emp_Login\", \"Emp_Password\", \"Dep_ID\", \"isManager\") VALUES ( "+employeeID+", '"+firstName+"', '"+lastName+"', '"+address+"', '"+jobPosition+"', '"+employeeLogin+"', '"+employeePassword+"', "+departmentID+", '"+isManager+"')";
 				
 			statement.executeUpdate(sql);
 			return true;
@@ -169,18 +169,16 @@ public class PostGresConnUtils {
 			
 			while(resultSet.next()){
 				
-				int roomNumber = resultSet.getInt("roomNumber");
-				String roomAmenities = resultSet.getString("amenities");
+				int roomNumber = resultSet.getInt("accessKey");
+				int amenitiesID = resultSet.getInt("amenities_ID");
 				String roomSize = resultSet.getString("roomSize");
-				String roomView = resultSet.getString("view");
-				double roomPrice = resultSet.getDouble("price");
+				String roomView = resultSet.getString("View_available");
+				double roomPrice = resultSet.getDouble("Price");
 				//int roomCustomerID = resultSet.getInt("customerID");// Might not need this. In the firstwebproject example, they didn't use it.
-				int roomHotelID = resultSet.getInt("hotelID");
-				boolean roomCanExtend = resultSet.getBoolean("canExtend");
+				int roomHotelID = resultSet.getInt("hotel_ID");
 				String roomStatus = resultSet.getString("status");
-				boolean roomDamaged = resultSet.getBoolean("damaged");
-				String roomDamageDescription = resultSet.getString("damageDescription");
-				HotelRoom room = new HotelRoom(roomNumber, roomAmenities, roomSize, roomView, roomPrice, roomHotelID, roomCanExtend, roomStatus, roomDamaged, roomDamageDescription);
+				int roomDamageID = resultSet.getInt("damage_ID");
+				HotelRoom room = new HotelRoom(roomNumber, amenitiesID, roomSize, roomView, roomPrice, roomHotelID, roomStatus, roomDamageID);
 				//This is a room without a customerID.
 				Rooms.add(room);
 			
@@ -204,22 +202,20 @@ public class PostGresConnUtils {
 		
 		try {
 			//Might want to rework this preparedStatement.
-			prepStatement = dataBaseConnection.prepareStatement("SELECT * FROM hotelRoom WHERE status='booked' and customerID='"+customerID+"'");
+			prepStatement = dataBaseConnection.prepareStatement("SELECT * FROM hotelRoom WHERE status='booked' and \"Cus_ID\"='"+customerID+"'");
 			resultSet = prepStatement.executeQuery();
 			
 			while(resultSet.next()){
-				int roomNumber = resultSet.getInt("roomNumber");
-				String roomAmenities = resultSet.getString("amenities");
+				int roomNumber = resultSet.getInt("accessKey");
+				int amenitiesID = resultSet.getInt("amenities_ID");
 				String roomSize = resultSet.getString("roomSize");
-				String roomView = resultSet.getString("view");
-				double roomPrice = resultSet.getDouble("price");
-				int roomCustomerID = resultSet.getInt("customerID");// Might not need this. In the firstwebproject example, they didn't use it.
-				int roomHotelID = resultSet.getInt("hotelID");
-				boolean roomCanExtend = resultSet.getBoolean("canExtend");
+				String roomView = resultSet.getString("View_available");
+				double roomPrice = resultSet.getDouble("Price");
+				//int roomCustomerID = resultSet.getInt("customerID");// Might not need this. In the firstwebproject example, they didn't use it.
+				int roomHotelID = resultSet.getInt("hotel_ID");
 				String roomStatus = resultSet.getString("status");
-				boolean roomDamaged = resultSet.getBoolean("damaged");
-				String roomDamageDescription = resultSet.getString("damageDescription");
-				HotelRoom room = new HotelRoom(roomNumber, roomAmenities, roomSize, roomView, roomPrice, roomCustomerID, roomHotelID, roomCanExtend, roomStatus, roomDamaged, roomDamageDescription);
+				int roomDamageID = resultSet.getInt("damage_ID");
+				HotelRoom room = new HotelRoom(roomNumber, amenitiesID, roomSize, roomView, roomPrice, roomHotelID, roomStatus, roomDamageID);
 				//This is a room without a customerID.
 				Rooms.add(room);
 			}
@@ -247,18 +243,16 @@ public class PostGresConnUtils {
 			resultSet = prepStatement.executeQuery();
 			
 			while(resultSet.next()){
-				int roomNumber = resultSet.getInt("roomNumber");
-				String roomAmenities = resultSet.getString("amenities");
+				int roomNumber = resultSet.getInt("accessKey");
+				int amenitiesID = resultSet.getInt("amenities_ID");
 				String roomSize = resultSet.getString("roomSize");
-				String roomView = resultSet.getString("view");
-				double roomPrice = resultSet.getDouble("price");
-				int roomCustomerID = resultSet.getInt("customerID");// Might not need this. In the firstwebproject example, they didn't use it.
-				int roomHotelID = resultSet.getInt("hotelID");
-				boolean roomCanExtend = resultSet.getBoolean("canExtend");
+				String roomView = resultSet.getString("View_available");
+				double roomPrice = resultSet.getDouble("Price");
+				//int roomCustomerID = resultSet.getInt("customerID");// Might not need this. In the firstwebproject example, they didn't use it.
+				int roomHotelID = resultSet.getInt("hotel_ID");
 				String roomStatus = resultSet.getString("status");
-				boolean roomDamaged = resultSet.getBoolean("damaged");
-				String roomDamageDescription = resultSet.getString("damageDescription");
-				HotelRoom room = new HotelRoom(roomNumber, roomAmenities, roomSize, roomView, roomPrice, roomCustomerID, roomHotelID, roomCanExtend, roomStatus, roomDamaged, roomDamageDescription);
+				int roomDamageID = resultSet.getInt("damage_ID");
+				HotelRoom room = new HotelRoom(roomNumber, amenitiesID, roomSize, roomView, roomPrice, roomHotelID, roomStatus, roomDamageID);
 				//This is a room without a customerID.
 				Rooms.add(room);
 			}
@@ -282,7 +276,7 @@ public class PostGresConnUtils {
 		
 		try {
 			
-			prepStatement = dataBaseConnection.prepareStatement("SELECT customerPassword FROM customer WHERE customerLogin= ?");
+			prepStatement = dataBaseConnection.prepareStatement("SELECT \"Cus_Password\" FROM customer WHERE \"Cus_Login\"= ?");
 			prepStatement.setString(1, param);
 			resultSet = prepStatement.executeQuery();
 			
@@ -310,7 +304,7 @@ public class PostGresConnUtils {
 		
 		try {
 			
-			prepStatement = dataBaseConnection.prepareStatement("SELECT firstName FROM customer WHERE customerLogin=?");
+			prepStatement = dataBaseConnection.prepareStatement("SELECT \"firstName\" FROM customer WHERE \"Cus_Login\"=?");
 			
 			prepStatement.setString(1, param);
 			resultSet = prepStatement.executeQuery();
@@ -339,7 +333,7 @@ public class PostGresConnUtils {
 		
 		try {
 			
-			prepStatement = dataBaseConnection.prepareStatement("SELECT employeeID, firstName, employeePassword FROM employee WHERE employeeLogin=?"); //I might include an except clause in the query to remove some columns.
+			prepStatement = dataBaseConnection.prepareStatement("SELECT \"SSN\", \"firstName\", \"Emp_Password\" FROM employee WHERE \"Emp_Login\"=?"); //I might include an except clause in the query to remove some columns.
 			
 			prepStatement.setString(1, employeeLogin);
 			resultSet = prepStatement.executeQuery();
@@ -359,6 +353,36 @@ public class PostGresConnUtils {
 		return info;
 		
 	}
+	
+	public String bookRoom(String custName, String roomno){
+		getConn();
+		String Cus_ID="";
+		
+        try{
+        	
+        	prepStatement = dataBaseConnection.prepareStatement("select \"Cus_ID\" from customer where \"firstName\"='"+custName+"'");
+			resultSet = prepStatement.executeQuery();
+			
+			while(resultSet.next()){
+				Cus_ID = resultSet.getString("Cus_ID");
+			}
+			
+			
+        	statement = dataBaseConnection.createStatement();
+        	sql = "update hotelroom set \"Cus_ID\"='"+Cus_ID+"', status='booked' where accessKey='"+roomno+"'";
+            statement.executeUpdate(sql);
+            
+            
+            return Cus_ID;
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return "";	 
+        }finally {
+        	closeDatabase();
+        }
+		      
+    }
 	
 
 	

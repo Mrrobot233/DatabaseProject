@@ -8,8 +8,6 @@ public class HotelChain {
 	private String hotelChainName;
 	private String address; //Might break this down into Street, Zip Code etc. Might actually delete it all together.
 	private int numberOfHotels;
-	private int centralOfficeID;
-	private String centralOfficeAddress;
 	private String email;
 	private int phoneNumber;
 	private ArrayList<Hotel> hotels = new ArrayList<>();//Might need to use this. Might not.
@@ -25,7 +23,6 @@ public class HotelChain {
 	public void setHotelChainID(int hotelChainID) {
 		this.hotelChainID = hotelChainID;
 	}
-
 
 	public String getHotelChainName() {
 		return hotelChainName;
@@ -47,16 +44,8 @@ public class HotelChain {
 		return numberOfHotels;
 	}
 
-	public void setberNumOfHotels(int numberOfHotels) {
+	public void setNumberOfHotels(int numberOfHotels) {
 		this.numberOfHotels = numberOfHotels;
-	}
-
-	public int getCentralOfficeID() {
-		return centralOfficeID;
-	}
-
-	public void setCentralOfficeID(int centralOfficeID) {
-		this.centralOfficeID = centralOfficeID;
 	}
 
 	public String getEmail() {
@@ -75,20 +64,14 @@ public class HotelChain {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getCentralOfficeAddress() {
-		return centralOfficeAddress;
+	public ArrayList<Hotel> getHotels() {
+		return hotels;
 	}
 
-	public void setCentralOfficeAddress(String centralOfficeAddress) {
-		this.centralOfficeAddress = centralOfficeAddress;
+	public void setHotels(ArrayList<Hotel> hotels) {
+		this.hotels = hotels;
 	}
+	
+	
 
-	public void setNumberOfHotels(int numberOfHotels) {
-		this.numberOfHotels = numberOfHotels;
-	}
-	
-	
-	
-	
-	
 }

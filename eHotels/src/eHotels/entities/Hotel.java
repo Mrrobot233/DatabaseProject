@@ -14,6 +14,8 @@ public class Hotel {
 	private int numberOfRooms;//This is a fixed value
 	private int numberOfRoomsAvailable;//This will need to be updated constantly.
 	private int managerID;
+	private int bookingID;
+	private int employeeID;
 	private ArrayList<HotelRoom> rooms = new ArrayList<>();
 	
 	
@@ -129,6 +131,26 @@ public class Hotel {
 
 	public void setHotelName(String hotelName) {
 		this.hotelName = hotelName;
+	}
+
+
+	public int getBookingID() {
+		return bookingID;
+	}
+
+
+	public void setBookingID(int bookingID) {
+		this.bookingID = bookingID;
+	}
+
+
+	public int getEmployeeID() {
+		return employeeID;
+	}
+
+
+	public void setEmployeeID(int employeeID) {
+		this.employeeID = employeeID;
 	}
 
 

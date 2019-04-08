@@ -62,7 +62,7 @@
 						}
 					%>
 				</ul>
-				<input type="hidden" name="custFirstName" value="<%=customerFirstName%>" />
+				<input type="hidden" name="customerFirstName" value="<%=customerFirstName%>" />
 				<h4>Here are avaiable rooms</h4>
 
 				<select name = "roomno">

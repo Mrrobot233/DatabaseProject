@@ -12,7 +12,7 @@ public class HotelRoom {
 	
 	
 	private int roomNumber;
-	private String amenities; //Might consider turning this to an into an int with corresponding amenities options.
+	private int amenitiesID; //Might consider turning this to an into an int with corresponding amenities options.
 	private String roomSize;//Have 5 options for room sizes and the String corresponds to the roomSize
 	private String view; //Might consider turning this to an into an int with corresponding views options.
 	private double price;
@@ -20,18 +20,17 @@ public class HotelRoom {
 	private int hotelID;//Should be able to get this from the Hotel object.
 	private boolean canExtend;//This should be set to true for all rooms except for Single.
 	private String status;
-	private boolean damaged;//True when something in the room is damaged. False otherwise.
-	private String damageDescription; //A short description of the damage to the room.
+	private int damageID;
 	
 	public HotelRoom(){
 		
 	}
 	
-	public HotelRoom(int roomNumber, String amenities, String roomSize, String view, double price, int custID,
-			int hotelID, boolean canExtend, String status, boolean damaged, String damageDescription) {
+	public HotelRoom(int roomNumber, int amenitiesID, String roomSize, String view, double price, int custID,
+			int hotelID, boolean canExtend, String status, int damageID) {
 		super();
 		this.roomNumber = roomNumber;
-		this.amenities = amenities;
+		this.amenitiesID = amenitiesID;
 		this.roomSize = roomSize;
 		this.view = view;
 		this.price = price;
@@ -39,25 +38,37 @@ public class HotelRoom {
 		this.hotelID = hotelID;
 		this.canExtend = canExtend;
 		this.status = status;
-		this.damaged = damaged;
-		this.damageDescription = damageDescription;
+		this.damageID = damageID;
 	}
 	
 	//Constructor to create a room without the CustomerID
-	public HotelRoom(int roomNumber, String amenities, String roomSize, String view, double price,
-			int hotelID, boolean canExtend, String status, boolean damaged, String damageDescription) {
+	public HotelRoom(int roomNumber, int amenitiesID, String roomSize, String view, double price,
+			int hotelID, boolean canExtend, String status, int damageID) {
 		super();
 		this.roomNumber = roomNumber;
-		this.amenities = amenities;
+		this.amenitiesID = amenitiesID;
 		this.roomSize = roomSize;
 		this.view = view;
 		this.price = price;
 		this.hotelID = hotelID;
 		this.canExtend = canExtend;
 		this.status = status;
-		this.damaged = damaged;
-		this.damageDescription = damageDescription;
+		this.damageID = damageID;
 	}
+	
+	//Constructor to create a room without the CustomerID or canExtend
+		public HotelRoom(int roomNumber, int amenitiesID, String roomSize, String view, double price,
+				int hotelID, String status, int damageID) {
+			super();
+			this.roomNumber = roomNumber;
+			this.amenitiesID = amenitiesID;
+			this.roomSize = roomSize;
+			this.view = view;
+			this.price = price;
+			this.hotelID = hotelID;
+			this.status = status;
+			this.damageID = damageID;
+		}
 
 
 
@@ -69,12 +80,12 @@ public class HotelRoom {
 		this.roomNumber = roomNumber;
 	}
 
-	public String getAmenities() {
-		return amenities;
+	public int getAmenitiesID() {
+		return amenitiesID;
 	}
 
-	public void setAmenities(String amenities) {
-		this.amenities = amenities;
+	public void setAmenitiesID(int amenitiesID) {
+		this.amenitiesID = amenitiesID;
 	}
 
 	public String getRoomSize() {
@@ -133,21 +144,19 @@ public class HotelRoom {
 		this.status = status;
 	}
 
-	public boolean isDamaged() {
-		return damaged;
+	public int getDamageID() {
+		return damageID;
 	}
 
-	public void setDamaged(boolean damaged) {
-		this.damaged = damaged;
+	public void setDamageID(int damageID) {
+		this.damageID = damageID;
 	}
 
-	public String getDamageDescription() {
-		return damageDescription;
+	public void setCustomerID(int customerID) {
+		this.customerID = customerID;
 	}
 
-	public void setDamageDescription(String damageDescription) {
-		this.damageDescription = damageDescription;
-	}
+
 
 	
 	
